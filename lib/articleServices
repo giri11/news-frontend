@@ -1,0 +1,16 @@
+import apiClient from './apiClient';
+
+export const detailService = {
+  async getById(id) {
+    const response = await apiClient.get(`/detail/${id}`);
+    return response.data;
+  },
+  
+  async getByIdWithParams(id, otherParam) {
+    // If you have query params too: /detail/{id}?param=value
+    const response = await apiClient.get(`/detail/${id}`, {
+      params: { otherParam }
+    });
+    return response.data;
+  }
+};
