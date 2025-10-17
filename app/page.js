@@ -7,11 +7,8 @@ export const revalidate = 3600;
 
 export default async function Home() {
   const data = await fetchTopHeadlines();
-  console.log("giri");
-  console.log(data);
   const articles = data.data || [];
-  console.log(articles);
-
+  
   const featuredArticle = articles[0];
   const regularArticles = articles.slice(1, 13);
 

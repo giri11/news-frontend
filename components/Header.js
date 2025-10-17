@@ -3,7 +3,7 @@ import CategoryNav from '@/components/CategoryNav';
 
 export default function Header() {
   return (
-    <header className="bg-white border-b shadow-sm sticky top-0 z-50">
+    <header className="bg-white fixed top-0 left-0 right-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-6">
         <Link href="/">
           <h1 className="text-4xl font-bold text-center">
@@ -22,7 +22,7 @@ export default function Header() {
           })}
         </p>
       </div>
-      {/* <CategoryNav /> */}
+      <CategoryNav />
     </header>
   );
 }
