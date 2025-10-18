@@ -5,15 +5,9 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { fetchCategories } from '@/lib/apiClient';
 
-// const categories = [
-//   { name: 'All News', href: '/', value: 'general' },
-//   { name: 'Event', href: '/category/event', value: 'event' },
-//   { name: 'Health', href: '/category/health', value: 'health' },
-// ];
-
 export default function CategoryNav() {
   const pathname = usePathname();
-  const [categories, setCategories] = useState([]); // Initialize with empty array
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -36,13 +30,13 @@ export default function CategoryNav() {
 
       // Normalize other categories from API
       const normalized = data
-        .filter(cat => cat?.name !== 'general') // Remove any existing general category
+        .filter(cat => cat?.name !== 'general')
         .map((cat, idx) => {
           const name = cat?.name || '';
           const slug = cat?.slug ?? name;
           const displayName = cat?.displayName ?? (String(name).charAt(0).toUpperCase() + String(name).slice(1));
           return {
-            id: cat?.id ?? idx + 1, // Start from 1 since All News is 0
+            id: cat?.id ?? idx + 1,
             name,
             slug,
             displayName,
@@ -54,7 +48,6 @@ export default function CategoryNav() {
     } catch (error) {
       console.error('Error loading categories:', error);
       setError(error.message);
-      // Fallback to default categories if API fails
       setCategories(getDefaultCategories());
     } finally {
       setLoading(false);
@@ -63,7 +56,8 @@ export default function CategoryNav() {
 
   const getDefaultCategories = () => {
     return [
-      { id: 1, name: 'general', displayName: 'All News', slug: '' },    ];
+      { id: 1, name: 'general', displayName: 'All News', slug: '' },
+    ];
   };
 
   const getCategoryHref = (category) => {
@@ -80,12 +74,12 @@ export default function CategoryNav() {
 
   if (loading) {
     return (
-    <nav className="bg-white border-b shadow-sm">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex gap-2 overflow-x-auto py-2.5 scrollbar-hide">
-            <div className="px-4 py-1.5 bg-slate-100 text-slate-400 rounded-full text-sm">
-              Loading...
-            </div>
+      <nav className="bg-white border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex gap-8 py-3.5">
+            <div className="h-5 w-20 bg-slate-200 rounded animate-pulse"></div>
+            <div className="h-5 w-20 bg-slate-200 rounded animate-pulse"></div>
+            <div className="h-5 w-20 bg-slate-200 rounded animate-pulse"></div>
           </div>
         </div>
       </nav>
@@ -93,47 +87,31 @@ export default function CategoryNav() {
   }
 
   return (
-    <nav className="bg-white border-b sticky top-[68px] z-40 shadow-sm">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center">
-          {/* Fixed "All News" category */}
-          {categories?.[0] && (
-            <div className="flex-none mr-2">
-              <Link
-                href={getCategoryHref(categories[0])}
-                className={`px-4 py-1.5 text-sm font-medium whitespace-nowrap rounded-full transition-all ${
-                  isActive(categories[0])
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
-              >
-                {categories[0].displayName}
-              </Link>
-            </div>
-          )}
-          
-          {/* Scrollable categories */}
-          <div className="flex gap-2 overflow-x-auto py-2.5 scrollbar-hide">
-            {categories && categories.length > 1 ? (
-              categories.slice(1).map((cat) => (
+    <nav className="bg-white border-t border-slate-100">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
+          {categories && categories.length > 0 ? (
+            categories.map((cat) => (
               <Link
                 key={cat.id}
                 href={getCategoryHref(cat)}
-                className={`px-4 py-1.5 text-sm font-medium whitespace-nowrap rounded-full transition-all ${
+                className={`px-4 py-3.5 text-sm font-medium whitespace-nowrap transition-all relative ${
                   isActive(cat)
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    ? 'text-blue-600'
+                    : 'text-slate-700 hover:text-blue-600'
                 }`}
               >
                 {cat.displayName}
+                {isActive(cat) && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"></span>
+                )}
               </Link>
             ))
           ) : (
-            <div className="px-4 py-1.5 bg-red-50 text-red-600 rounded-full text-sm">
+            <div className="px-4 py-3.5 text-sm text-red-600">
               No categories available
             </div>
           )}
-          </div>
         </div>
       </div>
     </nav>
