@@ -1,7 +1,7 @@
 import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
 
-export default function FeaturedArticle({ article, index = 0 }) {
+export default function FeaturedArticle({ article }) {
   if (!article) return null;
 
   const timeAgo = formatDistanceToNow(new Date(article.createdAt), {
@@ -11,7 +11,7 @@ export default function FeaturedArticle({ article, index = 0 }) {
   const imageSrc = article.pathImage || '/placeholder.jpg';
 
   return (
-    <Link href={`/article/${index}`}>
+    <Link href={`/article/${article.id}`}>
       <article className="relative rounded-2xl overflow-hidden shadow-xl group cursor-pointer mb-12">
         <div className="relative h-[450px]">
           <img

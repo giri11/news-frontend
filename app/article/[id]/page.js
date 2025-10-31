@@ -50,6 +50,7 @@ export default async function ArticleDetailPage({ params }) {
         {/* Featured Image */}
         <div className="relative h-96 bg-slate-100">
           <img
+            // src={`${process.env.NEXT_PUBLIC_NEWS_HOST}${article.pathImage}` || '/placeholder.jpg'}
             src={article.pathImage || '/placeholder.jpg'}
             alt={article.title}
             className="w-full h-full object-cover"

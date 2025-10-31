@@ -1,7 +1,7 @@
 import { formatDistanceToNow } from 'date-fns';
 import Link from 'next/link';
 
-export default function ArticleCard({ article, index }) {
+export default function ArticleCard({ article }) {
   const timeAgo = formatDistanceToNow(new Date(article.createdAt), {
     addSuffix: true,
   });
