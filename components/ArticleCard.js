@@ -9,7 +9,7 @@ export default function ArticleCard({ article, index }) {
   const imageSrc = article.pathImage || '/placeholder.jpg';
 
   return (
-    <Link href={`/article/${index}`}>
+    <Link href={`/article/${article.id}`}>
       <article className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer">
         <div className="relative h-56 overflow-hidden bg-slate-100">
           <img

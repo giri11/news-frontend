@@ -24,7 +24,7 @@ export default async function Home() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {regularArticles.map((article, index) => (
-            <ArticleCard key={index} article={article} index={index + 1} />
+            <ArticleCard key={article.id} article={article} index={article.id} />
           ))}
         </div>
       </section>
