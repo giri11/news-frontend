@@ -1,6 +1,7 @@
 import { detailService } from '@/lib/articleServices';
 import { fetchTopHeadlines } from '@/lib/apiClient';
 import { formatDistanceToNow } from 'date-fns';
+import { sanitizeHTML } from '@/lib/sanitize';
 import Link from 'next/link';
 import ArticleCard from '@/components/ArticleCard';
 
@@ -14,6 +15,7 @@ export default async function ArticleDetailPage({ params }) {
   const otherArticles = await fetchTopHeadlines('general');
   const articles = otherArticles.data || [];
   const article = data;
+  const clean = sanitizeHTML(article.content);
   
   if (!article) {
     return (
@@ -89,9 +91,10 @@ content nya ini
           {/* Main Content */}
           {article.content && (
             <div className="prose prose-lg max-w-none mb-8">
-              <p className="text-slate-800 leading-relaxed">
-                {article.content}
-              </p>
+              <div
+                className="text-slate-800 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: clean }}
+              />
             </div>
           )}
 
